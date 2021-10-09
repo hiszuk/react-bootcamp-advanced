@@ -31,14 +31,14 @@ export const Home = () => {
                 `<VideoCard>`には、先ほど指定されていたpropsを流し込みます
               */}
               <VideoCard
-                title={video.title}
+                title={video.title || "NO TITLE"}
                 // ownerは投稿者の名前を入れたいが、現段階では、名前を取得することができない
                 owner={video.owner?.name || ""}
                 views={video.views}
                 created={video.created_at}
                 // <VideoCard> で非同期的に画像を取得するための関数
                 fetcher={() =>
-                  storage.ref(video.thumbnail_url).getDownloadURL()
+                  storage.ref(video.thumbnail_url || "").getDownloadURL()
                 }
               />
             </Link>

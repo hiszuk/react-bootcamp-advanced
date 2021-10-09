@@ -52,8 +52,8 @@ export const Watch = () => {
           再生する動画の情報を渡す
         */}
           <VideoPlayerCard
-            title={currentVideo?.videos_by_pk?.title}
-            description={currentVideo?.videos_by_pk?.description}
+            title={currentVideo?.videos_by_pk?.title || "NO TITLE"}
+            description={currentVideo?.videos_by_pk?.description || ""}
             views={currentVideo?.videos_by_pk?.views}
             ownerName={currentVideo?.videos_by_pk?.owner?.name}
             date={currentVideo?.videos_by_pk?.created_at}
@@ -85,12 +85,12 @@ export const Watch = () => {
                   カードの表示に必要なデータをpropsに渡す
                 */}
                 <VideoHorizontalCard
-                  title={video.title}
+                  title={video.title || "NO TITLE"}
                   views={video.views}
                   owner={video.owner?.name || ""}
                   created={video.created_at}
                   fetcher={() =>
-                    storage.ref(video.thumbnail_url).getDownloadURL()
+                    storage.ref(video.thumbnail_url || "").getDownloadURL()
                   }
                 />
               </Link>

@@ -1,5 +1,5 @@
 query RecommendVideos($currentVideoId: String!) {
-  videos(where: { id: { _neq: $currentVideoId } }) {
+  videos(where: {id: {_neq: $currentVideoId}}, order_by: {views: desc}) {
     id
     title
     description
