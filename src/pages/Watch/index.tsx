@@ -6,11 +6,16 @@ import { useParams } from "react-router";
 import {
   useRecommendVideosQuery,
   useUpdateVideoViewsMutation,
+  useSubsribersQuery,
   useVideoByPkQuery,
   VideosDocument,
 } from "../../utils/graphql/generated";
 import { storage } from "../../utils/Firebase/config";
 import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { GlobalUser } from "../../stores/User";
+import { useSubscribe } from "../../hooks/Channel/useSubscribe";
+import { useUnSubscribe } from "../../hooks/Channel/useUnSubscribe";
 
 export const Watch = () => {
   const styles = useStyles();
@@ -27,6 +32,13 @@ export const Watch = () => {
     },
   });
 
+  // 動画オーナーの登録者数を取得する
+  const { data: subscribers } = useSubsribersQuery({
+    variables: {
+      ownerid: currentVideo?.videos_by_pk?.owner.id || '',
+    },
+  });
+
   // 追加
   // リコメンドの動画を取得する
   const { data: recommendVides } = useRecommendVideosQuery({
@@ -35,7 +47,11 @@ export const Watch = () => {
     },
   });
 
-  // 再生回数をカウントアップmutation
+  // リコメンドの動画を絞り込む
+  const VIDEOS_DISP_MAX = 6;
+  const videos = recommendVides?.videos.slice(0, VIDEOS_DISP_MAX);
+
+  // 再生回数をカウントアップするmutation
   const [updateMutation, { error: apolloError }] = useUpdateVideoViewsMutation({
     refetchQueries: [{ query: VideosDocument }],
   });
@@ -51,6 +67,39 @@ export const Watch = () => {
       console.log(apolloError.message);
     }
   }
+
+  //　チャンネル登録する
+  const { subscribe, error: insError } = useSubscribe();
+  const onSubscribe = async (userid: string, subscribeId: string) => {
+    await subscribe({
+      userid: userid,
+      subscribeId: subscribeId
+    });
+    if (insError) {
+      console.log(insError.message);
+    }
+  } 
+
+  //　チャンネル登録解除する
+  const { unsubscribe, error: delError } = useUnSubscribe();
+  const onUnSubscribe = async (userid: string, subscribeId: string) => {
+    await unsubscribe({
+      userid: userid,
+      subscribeId: subscribeId
+    });
+    if (delError) {
+      console.log(delError.message);
+    }
+  } 
+
+  // ユーザー情報から登録済みチャンネルのID配列取得
+  const globalUser = useRecoilValue(GlobalUser);
+
+  // 表示中のビデオオーナーをログインユーザーが登録しているか？
+  const isSubscribed = globalUser?.subscribesByUserid?.filter((sub) => sub.subscribe_id === currentVideo?.videos_by_pk?.owner.id).length === 1
+
+  // ログインしており、表示中のビデオオーナーとログインユーザーが違う場合
+  const showSubscribeButton = (globalUser?.id && currentVideo?.videos_by_pk?.owner.id !== globalUser?.id)
 
   return (
     // 全体のデザインを整えるためのコンテナー
@@ -75,7 +124,10 @@ export const Watch = () => {
             description={currentVideo?.videos_by_pk?.description || ""}
             views={currentVideo?.videos_by_pk?.views}
             ownerName={currentVideo?.videos_by_pk?.owner?.name}
+            subscribers={subscribers?.subscribes.length || 0}
             date={currentVideo?.videos_by_pk?.created_at}
+            showSubscribeButton={showSubscribeButton || false}
+            isSubscribed={isSubscribed}
             fetcher={async () => {
               if (currentVideo?.videos_by_pk?.video_url) {
                 return storage
@@ -85,6 +137,8 @@ export const Watch = () => {
               return undefined;
             }}
             onPlay={() => { onPlayVideo(currentVideo?.videos_by_pk?.id) }}
+            onSubscribe={() => { onSubscribe(globalUser?.id || '', currentVideo?.videos_by_pk?.owner.id || '') }}
+            onUnSubscribe={() => { onUnSubscribe(globalUser?.id || '', currentVideo?.videos_by_pk?.owner.id || '') }}
           />
         </Grid>
         {/*
@@ -92,7 +146,7 @@ export const Watch = () => {
           リコメンドの動画を一覧表示
         */}
         <Grid item xs={4}>
-          {recommendVides?.videos.map((video) => (
+          {videos?.map((video) => (
             <div className={styles.cardPadding} key={video.id}>
               {/*
                 動画プレイヤーを表示するためのリンク
