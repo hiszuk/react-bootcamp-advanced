@@ -1,4 +1,8 @@
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/auth"
+import "firebase/storage"
+import "firebase/firestore"
+
 
 // Firebase コンソールの「プロジェクトの設定」>「SDK の設定と構成」から「構成」を選択し、そのままコピペ
 const firebaseConfig = {
@@ -12,7 +16,10 @@ const firebaseConfig = {
 
 // firebaseパッケージをAPI Keyで初期化
 // Firebaseコンソールでさksウエイ他アプリとReactを紐づける処理
-firebase.initializeApp(firebaseConfig);
+// 既にインスタンスが存在するときは初期化しない
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig)
+}
 
 // 認証用のfirebaseモジュール
 export const fireAuth = firebase.auth();
