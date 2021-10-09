@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { GlobalUser } from "../../../stores/User";
 import { FireSignupType } from "../../../utils/Firebase/signup";
@@ -19,9 +18,6 @@ export const useSignup = () => {
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
-
-  // リダイレクト用の関数
-  const navigate = useNavigate();
 
   // mutationで作成するデータを格納
   const setGlobalUser = useSetRecoilState(GlobalUser);
@@ -84,9 +80,6 @@ export const useSignup = () => {
     if (apolloResponse.data?.insert_users_one?.id) {
       // GraphQLでデータが作成された後に確実にデータを格納する
       setGlobalUser(apolloResponse.data?.insert_users_one);
-
-      // `/`へリダイレクト
-      navigate("/");
     } else {
       throw new Error("ユーザーの登録に失敗しました。");
     }
@@ -95,7 +88,8 @@ export const useSignup = () => {
   // useAuthHelperを使用して、実際に認証に使用する関数を生成する
   const { authExecute, error, setErrorHandler, loading } = useAuthHelper(
     signup,
-    formValidation
+    formValidation,
+    "/"
   );
 
   // GraphQLのエラーがあったら、ここでキャッチして、エラー処理を行う
