@@ -22,7 +22,7 @@ export const Home = () => {
           `query`で取得した動画データを表示する
         */}
         {data?.videos.map((video) => (
-          <Grid item xs={3}>
+          <Grid item xs={3} key={video.id}>
             {/*
               カードをクリックしたら、プレイヤー画面を表示します。
             */}

@@ -158,7 +158,7 @@ export const VideoSelect = ({
           <Grid container spacing={2} className={styles.thumbnailContent}>
             {thumbnailURLs.map((url) => {
               return (
-                <Grid item xs={4}>
+                <Grid item xs={4} key={url}>
                   <CardMedia
                     // 追加
                     // サムネイルのスタリングを`useStyles`に移行

@@ -73,7 +73,7 @@ export const Watch = () => {
         */}
         <Grid item xs={4}>
           {recommendVides?.videos.map((video) => (
-            <div className={styles.cardPadding}>
+            <div className={styles.cardPadding} key={video.id}>
               {/*
                 動画プレイヤーを表示するためのリンク
               */}
