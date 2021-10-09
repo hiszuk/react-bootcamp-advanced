@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Button,
   Card,
   CardContent,
   CardHeader,
@@ -7,6 +8,8 @@ import {
   Divider,
   Typography,
 } from "@material-ui/core";
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import CancelIcon from '@material-ui/icons/Cancel';
 import { useEffect, useState } from "react";
 import useStyles from "./style";
 
@@ -16,9 +19,14 @@ export type VideoPlayerCardProps = {
   description: string | undefined;
   views: number | undefined;
   ownerName: string | undefined;
+  subscribers: number | undefined;
   date: Date | undefined;
+  showSubscribeButton: boolean;
+  isSubscribed: boolean;
   fetcher: () => Promise<string | undefined>;
   onPlay: () => any;
+  onSubscribe: () => any;
+  onUnSubscribe: () => any;
 };
 
 export const VideoPlayerCard = ({
@@ -26,9 +34,14 @@ export const VideoPlayerCard = ({
   description,
   views,
   ownerName,
+  subscribers,
   date,
+  showSubscribeButton,
+  isSubscribed,
   fetcher,
   onPlay,
+  onSubscribe,
+  onUnSubscribe,
 }: VideoPlayerCardProps) => {
   const styles = useStyles();
 
@@ -83,12 +96,38 @@ export const VideoPlayerCard = ({
       {/* 
         stylesの適用
       */}
-      <CardHeader
-        className={styles.paddingHorizontalLess}
-        avatar={<Avatar />}
-        title={ownerName}
-        subheader="0 subscribers"
-      />
+      <div className={styles.cardHeader}>
+        <CardHeader
+          className={styles.paddingHorizontalLess}
+          avatar={<Avatar />}
+          title={ownerName}
+          subheader={`${subscribers || 0} subscribers`}
+        />
+        {/* チャンネル登録ボタン */}
+        {showSubscribeButton &&
+          <div className={styles.chanelButton}>
+            {isSubscribed ? (
+              <Button
+                variant="contained"
+                color="default"
+                onClick={onUnSubscribe}
+                startIcon={<CancelIcon />}
+              >
+                チャンネル解除
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={onSubscribe}
+                startIcon={<AddCircleIcon />}
+              >
+                チャンネル登録
+              </Button>
+            )}
+          </div>
+        }
+      </div>
 
       {/* 説明文エリア */}
       <CardContent className={styles.descPadding}>{description}</CardContent>

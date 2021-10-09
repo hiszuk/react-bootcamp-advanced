@@ -11,4 +11,12 @@ export default makeStyles({
   descPadding: {
     paddingLeft: 56,
   },
+  chanelButton: {
+    display: "flex",
+  },
+  cardHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
 });
