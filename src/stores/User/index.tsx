@@ -1,7 +1,7 @@
 // src/stores/User/index.tsxを作成
 
 import { atom } from "recoil";
-import { Users } from "../../utils/graphql/generated";
+import { Users, Subscribes } from "../../utils/graphql/generated";
 
 // Pickはある型から特定のプロパティのみを抜き出し、新しい型を生成するTypescriptの機能
 export type GlobalUserType =
@@ -14,7 +14,8 @@ export type GlobalUserType =
       | "created_at"
       | "updated_at"
     >
-  | undefined;
+    & { subscribesByUserid?: Pick<Subscribes, "subscribe_id">[] }
+    | undefined;
 
 // keyはユニークとなるように命名する
 export const GlobalUser = atom<GlobalUserType>({
