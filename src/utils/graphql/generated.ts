@@ -1541,6 +1541,13 @@ export type InsertVideoMutationVariables = Exact<{
 
 export type InsertVideoMutation = { __typename?: 'mutation_root', insert_videos_one?: Maybe<{ __typename?: 'videos', id: string, title?: Maybe<string>, description?: Maybe<string>, video_url: string, thumbnail_url?: Maybe<string>, owner_id: string, duration: number, views: number, updated_at: any, created_at: any }> };
 
+export type UpdateVideoViewsMutationVariables = Exact<{
+  videoId: Scalars['String'];
+}>;
+
+
+export type UpdateVideoViewsMutation = { __typename?: 'mutation_root', update_video_views?: Maybe<{ __typename?: 'video_views_mutation_response', returning: Array<{ __typename?: 'video_views', id?: Maybe<string>, views?: Maybe<number> }> }> };
+
 export type RecommendVideosQueryVariables = Exact<{
   currentVideoId: Scalars['String'];
 }>;
@@ -1659,6 +1666,42 @@ export function useInsertVideoMutation(baseOptions?: Apollo.MutationHookOptions<
 export type InsertVideoMutationHookResult = ReturnType<typeof useInsertVideoMutation>;
 export type InsertVideoMutationResult = Apollo.MutationResult<InsertVideoMutation>;
 export type InsertVideoMutationOptions = Apollo.BaseMutationOptions<InsertVideoMutation, InsertVideoMutationVariables>;
+export const UpdateVideoViewsDocument = gql`
+    mutation updateVideoViews($videoId: String!) {
+  update_video_views(where: {id: {_eq: $videoId}}, _inc: {views: 1}) {
+    returning {
+      id
+      views
+    }
+  }
+}
+    `;
+export type UpdateVideoViewsMutationFn = Apollo.MutationFunction<UpdateVideoViewsMutation, UpdateVideoViewsMutationVariables>;
+
+/**
+ * __useUpdateVideoViewsMutation__
+ *
+ * To run a mutation, you first call `useUpdateVideoViewsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateVideoViewsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateVideoViewsMutation, { data, loading, error }] = useUpdateVideoViewsMutation({
+ *   variables: {
+ *      videoId: // value for 'videoId'
+ *   },
+ * });
+ */
+export function useUpdateVideoViewsMutation(baseOptions?: Apollo.MutationHookOptions<UpdateVideoViewsMutation, UpdateVideoViewsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateVideoViewsMutation, UpdateVideoViewsMutationVariables>(UpdateVideoViewsDocument, options);
+      }
+export type UpdateVideoViewsMutationHookResult = ReturnType<typeof useUpdateVideoViewsMutation>;
+export type UpdateVideoViewsMutationResult = Apollo.MutationResult<UpdateVideoViewsMutation>;
+export type UpdateVideoViewsMutationOptions = Apollo.BaseMutationOptions<UpdateVideoViewsMutation, UpdateVideoViewsMutationVariables>;
 export const RecommendVideosDocument = gql`
     query RecommendVideos($currentVideoId: String!) {
   videos(where: {id: {_neq: $currentVideoId}}, order_by: {views: desc}) {

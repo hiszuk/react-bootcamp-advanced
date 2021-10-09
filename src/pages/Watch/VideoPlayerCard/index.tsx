@@ -18,6 +18,7 @@ export type VideoPlayerCardProps = {
   ownerName: string | undefined;
   date: Date | undefined;
   fetcher: () => Promise<string | undefined>;
+  onPlay: () => any;
 };
 
 export const VideoPlayerCard = ({
@@ -27,6 +28,7 @@ export const VideoPlayerCard = ({
   ownerName,
   date,
   fetcher,
+  onPlay,
 }: VideoPlayerCardProps) => {
   const styles = useStyles();
 
@@ -49,8 +51,9 @@ export const VideoPlayerCard = ({
         そして、`src`にメディアのパスを指定すると画面に表示されます。
         そして、今回はビデオプレイヤーに操作用のコントローラーを表示させたいので、`controls`というプロパティを指定しています。
         (`controls`はMaterial-UI特有のプロパティではなく、<video>HTMLタグのプロパティです。)
+        ビデオを再生するというイベントは「onPlay」で取得可能
       */}
-      <CardMedia component="video" controls src={src} />
+      <CardMedia component="video" controls src={src} onPlay={onPlay} />
 
       {/* タイトル表示エリア */}
       <CardContent className={styles.paddingHorizontalLess}>

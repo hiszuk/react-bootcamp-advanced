@@ -1,0 +1,10 @@
+mutation updateVideoViews(
+    $videoId: String!
+) {
+  update_video_views(where: {id: {_eq: $videoId}}, _inc: {views: 1}) {
+    returning {
+      id
+      views
+    }
+  }
+}

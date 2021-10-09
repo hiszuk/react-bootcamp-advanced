@@ -5,7 +5,9 @@ import { VideoHorizontalCard } from "../../components/VideoHorizontalCard";
 import { useParams } from "react-router";
 import {
   useRecommendVideosQuery,
+  useUpdateVideoViewsMutation,
   useVideoByPkQuery,
+  VideosDocument,
 } from "../../utils/graphql/generated";
 import { storage } from "../../utils/Firebase/config";
 import { Link } from "react-router-dom";
@@ -32,6 +34,23 @@ export const Watch = () => {
       currentVideoId: videoId,
     },
   });
+
+  // 再生回数をカウントアップmutation
+  const [updateMutation, { error: apolloError }] = useUpdateVideoViewsMutation({
+    refetchQueries: [{ query: VideosDocument }],
+  });
+  // onPlayで再生回数をカウントアップする処理を実行する
+  const onPlayVideo = async (id: string | undefined) => {
+    await updateMutation({
+      variables: {
+        videoId: id as string
+      }
+    });
+
+    if (apolloError) {
+      console.log(apolloError.message);
+    }
+  }
 
   return (
     // 全体のデザインを整えるためのコンテナー
@@ -65,6 +84,7 @@ export const Watch = () => {
               }
               return undefined;
             }}
+            onPlay={() => { onPlayVideo(currentVideo?.videos_by_pk?.id) }}
           />
         </Grid>
         {/*
