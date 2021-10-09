@@ -1541,6 +1541,22 @@ export type InsertVideoMutationVariables = Exact<{
 
 export type InsertVideoMutation = { __typename?: 'mutation_root', insert_videos_one?: Maybe<{ __typename?: 'videos', id: string, title?: Maybe<string>, description?: Maybe<string>, video_url: string, thumbnail_url?: Maybe<string>, owner_id: string, duration: number, views: number, updated_at: any, created_at: any }> };
 
+export type DeleteSubscribeMutationVariables = Exact<{
+  subscribe_id: Scalars['String'];
+  userid: Scalars['String'];
+}>;
+
+
+export type DeleteSubscribeMutation = { __typename?: 'mutation_root', delete_subscribes_by_pk?: Maybe<{ __typename?: 'subscribes', userid: string, subscribe_id: string }> };
+
+export type InsertSubscribeMutationVariables = Exact<{
+  userid: Scalars['String'];
+  subscribe_id: Scalars['String'];
+}>;
+
+
+export type InsertSubscribeMutation = { __typename?: 'mutation_root', insert_subscribes_one?: Maybe<{ __typename?: 'subscribes', userid: string, subscribe_id: string }> };
+
 export type UpdateVideoViewsMutationVariables = Exact<{
   videoId: Scalars['String'];
 }>;
@@ -1567,12 +1583,19 @@ export type VideosQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type VideosQuery = { __typename?: 'query_root', videos: Array<{ __typename?: 'videos', id: string, title?: Maybe<string>, description?: Maybe<string>, thumbnail_url?: Maybe<string>, video_url: string, duration: number, views: number, updated_at: any, created_at: any, owner: { __typename?: 'users', id: string, email: string, name: string, profile_photo_url?: Maybe<string>, updated_at: any, created_at: any } }> };
 
+export type SubsribersQueryVariables = Exact<{
+  ownerid: Scalars['String'];
+}>;
+
+
+export type SubsribersQuery = { __typename?: 'query_root', subscribes: Array<{ __typename?: 'subscribes', userid: string }> };
+
 export type UserByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type UserByIdQuery = { __typename?: 'query_root', users_by_pk?: Maybe<{ __typename?: 'users', id: string, name: string, email: string, profile_photo_url?: Maybe<string>, updated_at: any, created_at: any }> };
+export type UserByIdQuery = { __typename?: 'query_root', users_by_pk?: Maybe<{ __typename?: 'users', id: string, name: string, email: string, profile_photo_url?: Maybe<string>, updated_at: any, created_at: any, subscribesByUserid: Array<{ __typename?: 'subscribes', subscribe_id: string }> }> };
 
 
 export const InsertUserDocument = gql`
@@ -1666,6 +1689,76 @@ export function useInsertVideoMutation(baseOptions?: Apollo.MutationHookOptions<
 export type InsertVideoMutationHookResult = ReturnType<typeof useInsertVideoMutation>;
 export type InsertVideoMutationResult = Apollo.MutationResult<InsertVideoMutation>;
 export type InsertVideoMutationOptions = Apollo.BaseMutationOptions<InsertVideoMutation, InsertVideoMutationVariables>;
+export const DeleteSubscribeDocument = gql`
+    mutation deleteSubscribe($subscribe_id: String!, $userid: String!) {
+  delete_subscribes_by_pk(subscribe_id: $subscribe_id, userid: $userid) {
+    userid
+    subscribe_id
+  }
+}
+    `;
+export type DeleteSubscribeMutationFn = Apollo.MutationFunction<DeleteSubscribeMutation, DeleteSubscribeMutationVariables>;
+
+/**
+ * __useDeleteSubscribeMutation__
+ *
+ * To run a mutation, you first call `useDeleteSubscribeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteSubscribeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteSubscribeMutation, { data, loading, error }] = useDeleteSubscribeMutation({
+ *   variables: {
+ *      subscribe_id: // value for 'subscribe_id'
+ *      userid: // value for 'userid'
+ *   },
+ * });
+ */
+export function useDeleteSubscribeMutation(baseOptions?: Apollo.MutationHookOptions<DeleteSubscribeMutation, DeleteSubscribeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteSubscribeMutation, DeleteSubscribeMutationVariables>(DeleteSubscribeDocument, options);
+      }
+export type DeleteSubscribeMutationHookResult = ReturnType<typeof useDeleteSubscribeMutation>;
+export type DeleteSubscribeMutationResult = Apollo.MutationResult<DeleteSubscribeMutation>;
+export type DeleteSubscribeMutationOptions = Apollo.BaseMutationOptions<DeleteSubscribeMutation, DeleteSubscribeMutationVariables>;
+export const InsertSubscribeDocument = gql`
+    mutation InsertSubscribe($userid: String!, $subscribe_id: String!) {
+  insert_subscribes_one(object: {userid: $userid, subscribe_id: $subscribe_id}) {
+    userid
+    subscribe_id
+  }
+}
+    `;
+export type InsertSubscribeMutationFn = Apollo.MutationFunction<InsertSubscribeMutation, InsertSubscribeMutationVariables>;
+
+/**
+ * __useInsertSubscribeMutation__
+ *
+ * To run a mutation, you first call `useInsertSubscribeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertSubscribeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertSubscribeMutation, { data, loading, error }] = useInsertSubscribeMutation({
+ *   variables: {
+ *      userid: // value for 'userid'
+ *      subscribe_id: // value for 'subscribe_id'
+ *   },
+ * });
+ */
+export function useInsertSubscribeMutation(baseOptions?: Apollo.MutationHookOptions<InsertSubscribeMutation, InsertSubscribeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InsertSubscribeMutation, InsertSubscribeMutationVariables>(InsertSubscribeDocument, options);
+      }
+export type InsertSubscribeMutationHookResult = ReturnType<typeof useInsertSubscribeMutation>;
+export type InsertSubscribeMutationResult = Apollo.MutationResult<InsertSubscribeMutation>;
+export type InsertSubscribeMutationOptions = Apollo.BaseMutationOptions<InsertSubscribeMutation, InsertSubscribeMutationVariables>;
 export const UpdateVideoViewsDocument = gql`
     mutation updateVideoViews($videoId: String!) {
   update_video_views(where: {id: {_eq: $videoId}}, _inc: {views: 1}) {
@@ -1854,6 +1947,41 @@ export function useVideosLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Vid
 export type VideosQueryHookResult = ReturnType<typeof useVideosQuery>;
 export type VideosLazyQueryHookResult = ReturnType<typeof useVideosLazyQuery>;
 export type VideosQueryResult = Apollo.QueryResult<VideosQuery, VideosQueryVariables>;
+export const SubsribersDocument = gql`
+    query Subsribers($ownerid: String!) {
+  subscribes(where: {subscribe_id: {_eq: $ownerid}}) {
+    userid
+  }
+}
+    `;
+
+/**
+ * __useSubsribersQuery__
+ *
+ * To run a query within a React component, call `useSubsribersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSubsribersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSubsribersQuery({
+ *   variables: {
+ *      ownerid: // value for 'ownerid'
+ *   },
+ * });
+ */
+export function useSubsribersQuery(baseOptions: Apollo.QueryHookOptions<SubsribersQuery, SubsribersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SubsribersQuery, SubsribersQueryVariables>(SubsribersDocument, options);
+      }
+export function useSubsribersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SubsribersQuery, SubsribersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SubsribersQuery, SubsribersQueryVariables>(SubsribersDocument, options);
+        }
+export type SubsribersQueryHookResult = ReturnType<typeof useSubsribersQuery>;
+export type SubsribersLazyQueryHookResult = ReturnType<typeof useSubsribersLazyQuery>;
+export type SubsribersQueryResult = Apollo.QueryResult<SubsribersQuery, SubsribersQueryVariables>;
 export const UserByIdDocument = gql`
     query UserById($id: String!) {
   users_by_pk(id: $id) {
@@ -1863,6 +1991,9 @@ export const UserByIdDocument = gql`
     profile_photo_url
     updated_at
     created_at
+    subscribesByUserid {
+      subscribe_id
+    }
   }
 }
     `;
