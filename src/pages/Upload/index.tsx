@@ -5,6 +5,7 @@ import {
   Grid,
   Divider,
   CircularProgress,
+  IconButton,
 } from "@material-ui/core";
 import { UploadForm } from "./UploadForm";
 import { VideoSelect } from "./VideoSelector";
@@ -14,6 +15,7 @@ import { AccountLoaded } from "../../stores/AccountLoaded";
 import { useEffect, useState } from "react";
 import { GlobalUser } from "../../stores/User";
 import { useNavigate } from "react-router-dom";
+import CloseIcon from '@material-ui/icons/Close';
 
 export const Upload = () => {
   const styles = useStyles();
@@ -39,14 +41,26 @@ export const Upload = () => {
     }
   }, [accountLoaded, user?.id]);
 
+  // Dialogクローズ用
+  const [open, setOpen] = useState<boolean>(true);
+  const handleClose = () => {
+    setOpen(false);
+    navigate("/");
+  }
+
   return (
     // ダイアログコンポーネント
     // fullWidth: trueの場合、画面いっぱいにダイアログを表示
     // maxWidth: ダイアログの横幅の最大値を指定。指定できるプロパティはこちら(https://material-ui.com/api/dialog/)
     // open: ダイアログを表示するか。今回はURLを開いている際は、表示し続けるのでtrueを指定
-    <Dialog fullWidth={true} maxWidth="md" open={true}>
+    <Dialog fullWidth={true} maxWidth="md" open={open} onClose={handleClose}>
       {/* タイトル用コンポーネント */}
-      <DialogTitle>動画のアップロード</DialogTitle>
+      <DialogTitle>
+        動画のアップロード
+        <IconButton className={styles.closeButton} onClick={handleClose}>
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
 
       <Divider />
 
