@@ -1,0 +1,6 @@
+mutation deleteSubscribe($subscribe_id: String!, $userid: String!) {
+  delete_subscribes_by_pk(subscribe_id: $subscribe_id, userid: $userid) {
+    userid
+    subscribe_id
+  }
+}

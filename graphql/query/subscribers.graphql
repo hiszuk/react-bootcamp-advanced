@@ -1,0 +1,5 @@
+query Subsribers($ownerid: String!) {
+  subscribes(where: {subscribe_id: {_eq: $ownerid}}) {
+    userid
+  }
+}

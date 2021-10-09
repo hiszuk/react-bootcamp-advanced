@@ -1,0 +1,6 @@
+mutation InsertSubscribe($userid: String!, $subscribe_id: String!) {
+  insert_subscribes_one(object: {userid: $userid, subscribe_id: $subscribe_id}) {
+    userid
+    subscribe_id
+  }
+}

@@ -6,5 +6,8 @@ query UserById($id: String!) {
     profile_photo_url
     updated_at
     created_at
+    subscribesByUserid {
+      subscribe_id
+    }
   }
 }
