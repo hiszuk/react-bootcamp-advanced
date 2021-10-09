@@ -53,7 +53,7 @@ export const VideoHorizontalCard = ({
         {/*
           取得したサムネイルのダウンロードリンクを参照する
         */}
-        <CardMedia className={styles.media} image={src} title="Thumbnail" />
+        <CardMedia className={styles.media} image={src ? src : '/static/no-image.jpg'} title="Thumbnail" />
       </div>
 
       {/*
