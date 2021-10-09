@@ -1,8 +1,10 @@
 import { Container, Grid } from "@material-ui/core";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import { PaginationControlled as Pagenation} from "../../components/Pagenation";
 import { VideoCard } from "../../components/VideoCard";
+import { SearchWords } from "../../stores/SearchWords";
 import { storage } from "../../utils/Firebase/config";
 import { useVideosQuery } from "../../utils/graphql/generated";
 
@@ -15,8 +17,12 @@ export const Home = () => {
     console.error(error);
   }, [error]);
 
-  // 検索条件がある場合は data.videos を絞り込み videos に結果を入れる(後で実装する)
-  const videos = data?.videos;
+  // 検索条件がある場合は data.videos を絞り込み videos に結果を入れる
+  const searchWords = useRecoilValue(SearchWords);
+  const videos = (searchWords && data) ?
+    data.videos.filter(
+      (video) => video.description?.match(searchWords.description || '')
+    ) : data?.videos;
 
   // ページ制御
   const COUNT_PER_PAGE = 12;
