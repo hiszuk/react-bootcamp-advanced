@@ -8,6 +8,22 @@ ReactBootCampを終了した方が、さらに機能追加をする際に参考�
 
 ReactBootCampをまだ終了していない方は、まず、そちらを終了させてから、Advancedに挑戦してください。
 
+## 追加した機能について
+
+ReactBootcampで作成したアプリに追加した機能は以下の通りです。
+
+- ワーニングをできるだけ除去する
+- ユーザーインターフェース改善
+  - アップロード画面でキャンセル可能に
+  - ダッシュボードのユーザー画像にポップアップメニューを追加し、そこからログアウト可能に
+  - ビデオ一覧の並び順を変更
+  - ホーム画面にページネーションを追加
+- 機能追加
+  - オンメモリ検索機能
+  - 視聴回数のカウントアップ
+  - チャンネル登録・解除・一覧表示機能
+  - プロファイル編集機能とアバターの画像ファイル対応
+
 ----
 # git clone後
 
@@ -29,6 +45,7 @@ const firebaseConfig = {
 # React BootCamp Advanced 追加・修正内容 目次
 
 - [ReactBootcamp Advanced](#reactbootcamp-advanced)
+  - [追加した機能について](#追加した機能について)
 - [git clone後](#git-clone後)
 - [React BootCamp Advanced 追加・修正内容 目次](#react-bootcamp-advanced-追加修正内容-目次)
   - [1. ワーニング除去](#1-ワーニング除去)
