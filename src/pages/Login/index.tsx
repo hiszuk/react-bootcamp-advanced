@@ -35,6 +35,7 @@ export const Login = () => {
           variant="outlined"
           // useRefで作成したemailRefを渡してフォームの値を取得する。
           inputRef={ref.emailRef}
+          defaultValue="guest@foo.bar.com"
           // エラーがあれば、フォームのデザインをerror用に変更させる
           error={error.has("email")}
           // エラーの詳細のフォームの下部に表示する
@@ -52,6 +53,7 @@ export const Login = () => {
           variant="outlined"
           // useRefで作成したemailRefを渡してフォームの値を取得する。
           inputRef={ref.passwordRef}
+          defaultValue="guest123"
           // エラーがあれば、フォームのデザインをerror用に変更させる
           error={error.has("password")}
           // エラーの詳細のフォームの下部に表示する

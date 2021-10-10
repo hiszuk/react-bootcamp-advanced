@@ -54,35 +54,8 @@ export const useSignup = () => {
   };
 
   // 実際のサインアップのロジック
-  const signup = async () => {
-    // Firebaseのサインアップ処理を実行
-    const { user } = await fireSignup({
-      email: emailRef.current?.value || "",
-      password: passwordRef.current?.value || "",
-    });
-
-    if (!user?.uid) {
-      throw new Error("ユーザーの登録に失敗しました。");
-    }
-
-    // アカウントにトークンが設定されるまで待機
-    await checkAuthToken(user.uid);
-
-    // Hasuraにuserを作成する
-    const apolloResponse = await insertMutation({
-      variables: {
-        id: user.uid,
-        name: nameRef.current?.value || "",
-        email: emailRef.current?.value || "",
-      },
-    });
-
-    if (apolloResponse.data?.insert_users_one?.id) {
-      // GraphQLでデータが作成された後に確実にデータを格納する
-      setGlobalUser(apolloResponse.data?.insert_users_one);
-    } else {
-      throw new Error("ユーザーの登録に失敗しました。");
-    }
+  const signup = () => {
+    throw new Error("デモバージョンのためこの機能は使えません");
   };
 
   // useAuthHelperを使用して、実際に認証に使用する関数を生成する

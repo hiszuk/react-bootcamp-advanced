@@ -47,20 +47,7 @@ export const UploadForm = ({ videoFile, thumbFile }: UploadFormProps) => {
       return setErrorMessage(new Error("タイトルをしてください。"));
     }
 
-    upload({
-      file: {
-        video: videoFile,
-        thumbnail: thumbFile,
-      },
-      title: titleRef.current.value,
-      description: descRef.current?.value,
-      ownerId: user.id,
-    }).then((data) => {
-      // 動画のアップロードが成功すれば、`home`URLにリダイレクト
-      if (data?.id) {
-        navigate("/");
-      }
-    });
+    return setErrorMessage(new Error("デモバージョンのためこの機能は使えません"));
   };
 
   // Hooksからのエラーを受け取り、画面表示用のエラーステートに渡す。

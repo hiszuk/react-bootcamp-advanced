@@ -36,14 +36,7 @@ export const UploadForm = ({ avatarFile }: UploadFormProps) => {
       return setErrorMessage(new Error("名前をしてください。"));
     }
 
-    upload({
-      file: {
-        avatar: avatarFile,
-      },
-      name: nameRef.current.value,
-      description: descRef.current?.value,
-      userId: user.id,
-    });
+    return setErrorMessage(new Error("デモバージョンのためこの機能は使えません"));
   };
 
   // Hooksからのエラーを受け取り、画面表示用のエラーステートに渡す。

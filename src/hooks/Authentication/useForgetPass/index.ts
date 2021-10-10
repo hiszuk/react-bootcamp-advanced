@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 import { SetErrorFn, useAuthHelper } from "../useAuthHelper";
-import { forgetPass } from "../../../utils/Firebase/forgetPass";
 
 export const useForgetPass = () => {
   // ユーザーが入力した値を読み取るための`ref`
@@ -20,9 +19,9 @@ export const useForgetPass = () => {
     return false;
   };
 
-  const sendEmail = async () => {
-    await forgetPass(emailRef.current?.value || "");
-    setSendSuccess(true);
+  const sendEmail = () => {
+    setSendSuccess(false);
+    throw new Error("デモバージョンのためこの機能は使えません");
   };
 
   // useAuthHelperを使用して、実際に認証に使用する関数を生成する
