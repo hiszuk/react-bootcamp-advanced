@@ -1,4 +1,4 @@
-import { Avatar, Card, CardHeader, CardMedia } from "@material-ui/core";
+import { Card, CardHeader, CardMedia } from "@material-ui/core";
 import { HeaderTitle, HeaderTitleProps } from "./HeaderTitle";
 import { SubHeaderContent, SubHeaderContentProps } from "./SubHeaderContent";
 import useStyles from "./style";
@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 
 // 子コンポーネントの型定義を使用して、冗長な書き方を防ぐことができる
 export type VideoCardProps = {
+  avatar?: React.ReactNode
   fetcher: () => Promise<string | undefined>;
 } & HeaderTitleProps &
   SubHeaderContentProps;
@@ -16,6 +17,7 @@ export const VideoCard = ({
   owner,
   created,
   views,
+  avatar,
 }: VideoCardProps) => {
   const styles = useStyles();
 
@@ -50,7 +52,7 @@ export const VideoCard = ({
       */}
       <CardHeader
         className={styles.header}
-        avatar={<Avatar />}
+        avatar={avatar}
         // `Card`の`HeaderTitle`には`title`を渡す
         title={<HeaderTitle title={title} />}
         // `Card`の`SubHeaderContent`には、`owner`、`views`、`created`を渡す

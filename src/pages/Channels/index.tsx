@@ -49,7 +49,7 @@ export const Channels = () => {
               <div>
                 <CardHeader
                   className={styles.cardHeader}
-                  avatar={<Avatar />}
+                  avatar={<Avatar src={subscribe.subscribed.profile_photo_url || ""} />}
                   title={subscribe.subscribed.name}
                 />
                 <Button

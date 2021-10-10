@@ -1,4 +1,4 @@
-import { Container, Grid } from "@material-ui/core";
+import { Avatar, Container, Grid } from "@material-ui/core";
 import { VideoPlayerCard } from "./VideoPlayerCard";
 import useStyles from "./style";
 import { VideoHorizontalCard } from "../../components/VideoHorizontalCard";
@@ -124,6 +124,7 @@ export const Watch = () => {
             description={currentVideo?.videos_by_pk?.description || ""}
             views={currentVideo?.videos_by_pk?.views}
             ownerName={currentVideo?.videos_by_pk?.owner?.name}
+            ownerAvatar={<Avatar src={currentVideo?.videos_by_pk?.owner?.profile_photo_url || ""} />}
             subscribers={subscribers?.subscribes.length || 0}
             date={currentVideo?.videos_by_pk?.created_at}
             showSubscribeButton={showSubscribeButton || false}

@@ -59,7 +59,7 @@ export const DashboardHeader = () => {
                 </IconButton>
               </Link>
               <IconButton className={styles.profileIcon} onClick={handleUsermenuClick}>
-                <Avatar />
+              <Avatar src={globalUser.profile_photo_url||""} />
               </IconButton>
               <UserMenu name={globalUser.name} buttonRef={anchorEl} onClose={handleUsermenuClose} onLogout={handleLogout} />
             </>

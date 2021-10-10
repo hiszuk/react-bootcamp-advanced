@@ -1,4 +1,4 @@
-import { Container, Grid } from "@material-ui/core";
+import { Avatar, Container, Grid } from "@material-ui/core";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
@@ -60,6 +60,7 @@ export const Home = () => {
                 owner={video.owner?.name || ""}
                 views={video.views}
                 created={video.created_at}
+                avatar={<Avatar src={video.owner.profile_photo_url || ""} />}
                 // <VideoCard> で非同期的に画像を取得するための関数
                 fetcher={() =>
                   storage.ref(video.thumbnail_url || "").getDownloadURL()

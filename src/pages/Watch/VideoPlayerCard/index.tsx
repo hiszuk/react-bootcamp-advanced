@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Button,
   Card,
   CardContent,
@@ -19,6 +18,7 @@ export type VideoPlayerCardProps = {
   description: string | undefined;
   views: number | undefined;
   ownerName: string | undefined;
+  ownerAvatar: React.ReactNode | undefined;
   subscribers: number | undefined;
   date: Date | undefined;
   showSubscribeButton: boolean;
@@ -34,6 +34,7 @@ export const VideoPlayerCard = ({
   description,
   views,
   ownerName,
+  ownerAvatar,
   subscribers,
   date,
   showSubscribeButton,
@@ -99,7 +100,7 @@ export const VideoPlayerCard = ({
       <div className={styles.cardHeader}>
         <CardHeader
           className={styles.paddingHorizontalLess}
-          avatar={<Avatar />}
+          avatar={ownerAvatar}
           title={ownerName}
           subheader={`${subscribers || 0} subscribers`}
         />
