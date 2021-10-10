@@ -34,7 +34,7 @@ export const UserMenu = ({
       >
         <MenuItem>{name}</MenuItem>
         <Divider />
-        <MenuItem onClick={() => gotoPage("#")}>プロファイル</MenuItem>
+        <MenuItem onClick={() => gotoPage("/profile")}>プロファイル</MenuItem>
         <MenuItem onClick={onLogout}>
           <ListItemIcon>
             <ExitToAppRounded fontSize="small" />

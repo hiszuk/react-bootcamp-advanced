@@ -1,0 +1,13 @@
+mutation updateUser($id: String!, $name: String!, $profile_photo_url: String) {
+  update_users_by_pk(pk_columns: {id: $id}, _set: {name: $name, profile_photo_url: $profile_photo_url}) {
+    id
+    name
+    email
+    profile_photo_url
+    created_at
+    updated_at
+    subscribesByUserid {
+      subscribe_id
+    }
+  }
+}

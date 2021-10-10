@@ -1557,6 +1557,15 @@ export type InsertSubscribeMutationVariables = Exact<{
 
 export type InsertSubscribeMutation = { __typename?: 'mutation_root', insert_subscribes_one?: Maybe<{ __typename?: 'subscribes', userid: string, subscribe_id: string }> };
 
+export type UpdateUserMutationVariables = Exact<{
+  id: Scalars['String'];
+  name: Scalars['String'];
+  profile_photo_url?: Maybe<Scalars['String']>;
+}>;
+
+
+export type UpdateUserMutation = { __typename?: 'mutation_root', update_users_by_pk?: Maybe<{ __typename?: 'users', id: string, name: string, email: string, profile_photo_url?: Maybe<string>, created_at: any, updated_at: any, subscribesByUserid: Array<{ __typename?: 'subscribes', subscribe_id: string }> }> };
+
 export type UpdateVideoViewsMutationVariables = Exact<{
   videoId: Scalars['String'];
 }>;
@@ -1766,6 +1775,52 @@ export function useInsertSubscribeMutation(baseOptions?: Apollo.MutationHookOpti
 export type InsertSubscribeMutationHookResult = ReturnType<typeof useInsertSubscribeMutation>;
 export type InsertSubscribeMutationResult = Apollo.MutationResult<InsertSubscribeMutation>;
 export type InsertSubscribeMutationOptions = Apollo.BaseMutationOptions<InsertSubscribeMutation, InsertSubscribeMutationVariables>;
+export const UpdateUserDocument = gql`
+    mutation updateUser($id: String!, $name: String!, $profile_photo_url: String) {
+  update_users_by_pk(
+    pk_columns: {id: $id}
+    _set: {name: $name, profile_photo_url: $profile_photo_url}
+  ) {
+    id
+    name
+    email
+    profile_photo_url
+    created_at
+    updated_at
+    subscribesByUserid {
+      subscribe_id
+    }
+  }
+}
+    `;
+export type UpdateUserMutationFn = Apollo.MutationFunction<UpdateUserMutation, UpdateUserMutationVariables>;
+
+/**
+ * __useUpdateUserMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserMutation, { data, loading, error }] = useUpdateUserMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      name: // value for 'name'
+ *      profile_photo_url: // value for 'profile_photo_url'
+ *   },
+ * });
+ */
+export function useUpdateUserMutation(baseOptions?: Apollo.MutationHookOptions<UpdateUserMutation, UpdateUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateUserMutation, UpdateUserMutationVariables>(UpdateUserDocument, options);
+      }
+export type UpdateUserMutationHookResult = ReturnType<typeof useUpdateUserMutation>;
+export type UpdateUserMutationResult = Apollo.MutationResult<UpdateUserMutation>;
+export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<UpdateUserMutation, UpdateUserMutationVariables>;
 export const UpdateVideoViewsDocument = gql`
     mutation updateVideoViews($videoId: String!) {
   update_video_views(where: {id: {_eq: $videoId}}, _inc: {views: 1}) {
