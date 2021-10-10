@@ -1,7 +1,8 @@
 import firebase from "firebase/app";
-import "firebase/auth"
-import "firebase/storage"
-import "firebase/firestore"
+import "firebase/auth";
+import "firebase/storage";
+import "firebase/firestore";
+import "firebase/analytics";
 
 
 // Firebase コンソールの「プロジェクトの設定」>「SDK の設定と構成」から「構成」を選択し、そのままコピペ
@@ -11,7 +12,8 @@ const firebaseConfig = {
   projectId: "react-bootcamp-351bc",
   storageBucket: "react-bootcamp-351bc.appspot.com",
   messagingSenderId: "740212487180",
-  appId: "1:740212487180:web:06cd48ce76275cfbaaaa29"
+  appId: "1:740212487180:web:06cd48ce76275cfbaaaa29",
+  measurementId: "G-TPY4CZCWEE"
 };
 
 // firebaseパッケージをAPI Keyで初期化

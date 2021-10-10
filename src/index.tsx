@@ -8,10 +8,16 @@ import { RecoilRoot } from "recoil";
 import { AuthStateListener } from "./providers/AuthStateListener";
 import { GlobalAccout } from "./providers/GlobalAccount";
 import { ApolloProvider } from "./providers/ApolloClient";
+import firebase from "./utils/Firebase/config";
 
 // Material-UIの「テーマ」を作成する。
 // Material-UIをカスタマイズする際には、createThemeの引数にカスタマイズ項目を渡す。
 const theme = createTheme();
+
+// firebase analystics
+if (process.env.NODE_ENV === 'production') {
+  firebase.analytics();
+}
 
 ReactDOM.render(
   <React.StrictMode>
