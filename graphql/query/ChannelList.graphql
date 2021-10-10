@@ -1,0 +1,23 @@
+query ChannelList($id: String!) {
+  users_by_pk(id: $id) {
+    name
+    subscribesByUserid(order_by: {created_at: desc_nulls_last}) {
+      subscribed {
+        id
+        name
+        profile_photo_url
+        videos(order_by: {created_at: desc_nulls_last}, limit: 3) {
+          id
+          title
+          description
+          thumbnail_url
+          video_url
+          views
+          duration
+          created_at
+          updated_at
+        }
+      }
+    }
+  }
+}

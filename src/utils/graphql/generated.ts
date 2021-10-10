@@ -1564,6 +1564,13 @@ export type UpdateVideoViewsMutationVariables = Exact<{
 
 export type UpdateVideoViewsMutation = { __typename?: 'mutation_root', update_video_views?: Maybe<{ __typename?: 'video_views_mutation_response', returning: Array<{ __typename?: 'video_views', id?: Maybe<string>, views?: Maybe<number> }> }> };
 
+export type ChannelListQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type ChannelListQuery = { __typename?: 'query_root', users_by_pk?: Maybe<{ __typename?: 'users', name: string, subscribesByUserid: Array<{ __typename?: 'subscribes', subscribed: { __typename?: 'users', id: string, name: string, profile_photo_url?: Maybe<string>, videos: Array<{ __typename?: 'videos', id: string, title?: Maybe<string>, description?: Maybe<string>, thumbnail_url?: Maybe<string>, video_url: string, views: number, duration: number, created_at: any, updated_at: any }> } }> }> };
+
 export type RecommendVideosQueryVariables = Exact<{
   currentVideoId: Scalars['String'];
 }>;
@@ -1795,6 +1802,59 @@ export function useUpdateVideoViewsMutation(baseOptions?: Apollo.MutationHookOpt
 export type UpdateVideoViewsMutationHookResult = ReturnType<typeof useUpdateVideoViewsMutation>;
 export type UpdateVideoViewsMutationResult = Apollo.MutationResult<UpdateVideoViewsMutation>;
 export type UpdateVideoViewsMutationOptions = Apollo.BaseMutationOptions<UpdateVideoViewsMutation, UpdateVideoViewsMutationVariables>;
+export const ChannelListDocument = gql`
+    query ChannelList($id: String!) {
+  users_by_pk(id: $id) {
+    name
+    subscribesByUserid(order_by: {created_at: desc_nulls_last}) {
+      subscribed {
+        id
+        name
+        profile_photo_url
+        videos(order_by: {created_at: desc_nulls_last}, limit: 3) {
+          id
+          title
+          description
+          thumbnail_url
+          video_url
+          views
+          duration
+          created_at
+          updated_at
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useChannelListQuery__
+ *
+ * To run a query within a React component, call `useChannelListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useChannelListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChannelListQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useChannelListQuery(baseOptions: Apollo.QueryHookOptions<ChannelListQuery, ChannelListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ChannelListQuery, ChannelListQueryVariables>(ChannelListDocument, options);
+      }
+export function useChannelListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ChannelListQuery, ChannelListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ChannelListQuery, ChannelListQueryVariables>(ChannelListDocument, options);
+        }
+export type ChannelListQueryHookResult = ReturnType<typeof useChannelListQuery>;
+export type ChannelListLazyQueryHookResult = ReturnType<typeof useChannelListLazyQuery>;
+export type ChannelListQueryResult = Apollo.QueryResult<ChannelListQuery, ChannelListQueryVariables>;
 export const RecommendVideosDocument = gql`
     query RecommendVideos($currentVideoId: String!) {
   videos(where: {id: {_neq: $currentVideoId}}, order_by: {views: desc}) {

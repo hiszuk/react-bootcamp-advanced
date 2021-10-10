@@ -1,9 +1,9 @@
 import { Typography } from "@material-ui/core";
 
 export type SubHeaderContentProps = {
-  owner: string;
-  views: number;
-  created: Date;
+  owner?: string;
+  views?: number;
+  created?: Date;
 };
 
 // 親コンポーネントから、投稿者情報、再生回数、アップロード日時を受け取ります。
@@ -27,11 +27,11 @@ export const SubHeaderContent = ({
           // 再生回数
           views
         }
-        views
+        {" 回視聴 "}
         {
           // 追加
           // 投稿時間を表示
-          new Date(created).toLocaleDateString()
+          created && new Date(created).toLocaleDateString()
         }
       </Typography>{" "}
     </>
