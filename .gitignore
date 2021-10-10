@@ -27,3 +27,5 @@ functions/lib
 
 /assets
 .firebaserc
+.github/*
+.firebase
