@@ -1093,8 +1093,8 @@ import {
 
 **外部キー**
 
-1. subscribe_id -> users.id / on update violation: restrict / on delete violation: cascade
-2. userid -> users.id / on update violation: restrict / on delete violation: cascade
+1. 名前:subscribed リレーション:subscribe_id -> users.id<br /> / on update violation: restrict / on delete violation: cascade
+2. 名前:subscription　リレーション:userid -> users.id<br /> / on update violation: restrict / on delete violation: cascade
 
 **インデックス**
 
